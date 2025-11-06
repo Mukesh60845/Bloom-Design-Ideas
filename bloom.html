@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bloom — A Colorful Blog Post Template</title>
+  <style>
+    :root{
+      --bg:#0f1724; /* deep night */
+      --card:#0b1220;
+      --accent1:#ff7ab6; /* pink */
+      --accent2:#7ae7c7; /* mint */
+      --accent3:#ffd26f; /* warm yellow */
+      --muted:#98a0b3;
+      --glass: rgba(255,255,255,0.04);
+      --radius:16px;
+      --max-w:1000px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#e6eef8;background:linear-gradient(180deg,#071227 0%, #081227 50%, #071a2a 100%);}    
+    .wrap{max-width:var(--max-w);margin:36px auto;padding:28px;}
+
+    /* Header */
+    header.site{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#052;box-shadow:0 6px 20px rgba(10,10,25,0.6)}
+    .brand h1{margin:0;font-size:20px;letter-spacing:0.3px}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+    /* Layout */
+    .layout{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    @media (max-width:880px){.layout{grid-template-columns:1fr} .sidebar{order:2}}
+
+    /* Article card */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:var(--radius);box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .eyebrow{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:13px;margin-bottom:8px}
+    .category{background:linear-gradient(90deg,var(--accent2),var(--accent3));padding:6px 10px;border-radius:999px;color:#012; font-weight:700;font-size:12px}
+    h2.title{margin:6px 0 12px;font-size:28px;line-height:1.05}
+    .meta{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:13px}
+    .author{display:flex;gap:12px;align-items:center}
+    .avatar{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent3),var(--accent1));display:flex;align-items:center;justify-content:center;font-weight:700;color:#072}
+
+    .cover{height:220px;border-radius:12px;margin:18px 0;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(90deg, rgba(255,122,182,0.08), rgba(122,231,199,0.06));display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.12);font-weight:800}
+
+    article.post{font-size:16px;color:#e8f2ff;line-height:1.7}
+    article.post p{margin:14px 0}
+    article.post h3{margin:18px 0 8px}
+    .highlight{background:linear-gradient(90deg, rgba(255,122,182,0.08), rgba(122,231,199,0.04));padding:10px;border-radius:10px}
+    pre.code{background:linear-gradient(180deg, #031220, #051628);padding:14px;border-radius:10px;overflow:auto;font-family:monospace;font-size:13px;color:#cde}
+
+    /* toolbar (only for author) */
+    .toolbar{display:flex;gap:8px;margin-bottom:12px}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600}
+    .btn.primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#012;border:none;box-shadow:0 6px 18px rgba(122,231,199,0.06)}
+
+    /* Sidebar */
+    .sidebar .card{padding:18px}
+    .meta-list{display:flex;flex-direction:column;gap:12px}
+    .meta-item{display:flex;justify-content:space-between;align-items:center}
+
+    /* comments */
+    .comments{margin-top:14px}
+    .comment{background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);margin-bottom:10px}
+    .comment .who{font-weight:700}
+    .muted{color:var(--muted)}
+
+    /* small UI */
+    .tiny{font-size:12px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:999px;font-size:13px}
+
+    /* nice micro-interactions */
+    .btn:hover{transform:translateY(-2px);transition:transform .18s}
+    .card, .sidebar .card{transition:transform .18s, box-shadow .18s}
+    .card:hover{transform:translateY(-4px)}
+
+    /* editable state */
+    .editing article.post{outline:3px dashed rgba(122,231,199,0.06);padding:12px;border-radius:10px}
+    .contenteditable{padding:6px;border-radius:8px}
+    .hint{font-size:12px;color:var(--muted);margin-top:8px}
+
+    footer.site{margin-top:18px;display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>Bloom — Design & Ideas</h1>
+          <p>Fresh takes on design, code & craft</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="tiny muted">Reader / Author</div>
+        <label style="display:flex;gap:8px;align-items:center">
+          <input id="toggleAuthor" type="checkbox" /> <span class="muted tiny">Author View</span>
+        </label>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main>
+        <section class="card article-card" id="articleCard">
+
+          <div class="eyebrow">
+            <div class="category">Design</div>
+            <div class="muted tiny">Opinion • 3 min read</div>
+          </div>
+
+          <h2 class="title" id="postTitle">How to make micro-interactions that delight</h2>
+
+          <div class="meta">
+            <div class="author">
+              <div class="avatar">MB</div>
+              <div>
+                <div style="font-weight:700">Mukesh Bhukya</div>
+                <div class="muted tiny">Published: <span id="postDate">October 20, 2025</span></div>
+              </div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:10px">
+              <div class="tiny muted" id="postCategory">UI/UX</div>
+              <div class="tiny muted">•</div>
+              <div class="tiny muted" id="postCommentsCount">0 comments</div>
+            </div>
+          </div>
+
+          <div class="cover">COVER IMAGE / ILLUSTRATION</div>
+
+          <div id="authorToolbar" class="toolbar" style="display:none">
+            <button class="btn" id="editBtn">Edit content</button>
+            <button class="btn" id="addImgBtn">Insert sample image</button>
+            <button class="btn" id="resetBtn">Reset to demo</button>
+            <button class="btn primary" id="saveBtn">Save (local)</button>
+          </div>
+
+          <article class="post" id="postContent" tabindex="0">
+            <p class="lead">Micro-interactions are the small details that make your product feel alive. They are brief, delightful, and they convey clarity.</p>
+
+            <h3>Start with intention</h3>
+            <p>Every animation or little feedback should have a purpose — to guide, to reassure or to surprise pleasantly. Keep them short (200–500ms) and consistent.</p>
+
+            <div class="highlight">Tip: Use easing curves that match physical sense — try cubic-bezier(.2,.9,.3,1) for friendly finishes.</div>
+
+            <h3>Accessibility & performance</h3>
+            <p>Always provide a reduced-motion alternative and ensure interactions don't cause layout shifts. Prioritize readability over fancy effects.</p>
+
+            <pre class="code">// Example: simple JS to toggle a tooltip
+const tip = document.querySelector('.tooltip');
+</pre>
+
+            <p>Wrap these practices in documentation so other team members can follow the same language and rhythm.</p>
+          </article>
+
+          <div class="hint">Tip: Toggle <strong>Author View</strong> to edit the post directly. Changes save to your browser's local storage.</div>
+
+        </section>
+
+        <section class="card comments" id="commentsCard">
+          <h3 style="margin-top:0">Comments</h3>
+          <div id="commentsList"></div>
+
+          <form id="commentForm" style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <input id="cname" placeholder="Your name" required style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+            <textarea id="cbody" placeholder="Write a thoughtful comment..." rows="3" style="padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit"></textarea>
+            <div style="display:flex;gap:8px;align-items:center">
+              <button class="btn primary" type="submit">Post comment</button>
+              <div class="muted tiny">Be kind — comments are public.</div>
+            </div>
+          </form>
+        </section>
+
+      </main>
+
+      <aside class="sidebar">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><strong>Post details</strong><span class="muted tiny">Quick</span></div>
+          <div class="meta-list">
+            <div class="meta-item"><span class="muted">Author</span><strong id="sideAuthor">Mukesh Bhukya</strong></div>
+            <div class="meta-item"><span class="muted">Date</span><span id="sideDate">Oct 20, 2025</span></div>
+            <div class="meta-item"><span class="muted">Category</span><span id="sideCat">UI/UX</span></div>
+            <div class="meta-item"><span class="muted">Reading time</span><span>3 min</span></div>
+          </div>
+
+          <hr style="margin:14px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+
+          <div style="margin-top:8px">
+            <strong class="tiny">Tags</strong>
+            <div class="tags" style="margin-top:8px" id="tagList">
+              <span class="tag">micro-interactions</span>
+              <span class="tag">ui</span>
+              <span class="tag">accessibility</span>
+            </div>
+          </div>
+
+          <hr style="margin:14px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)"/>
+
+          <div style="display:flex;gap:8px;flex-direction:column">
+            <button class="btn" id="shareBtn">Share</button>
+            <button class="btn" id="likeBtn">Like <span id="likesCount">0</span></button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <strong>Related</strong>
+          <ul style="padding-left:16px;margin-top:8px;color:var(--muted);line-height:1.6">
+            <li>Design systems: motion tokens</li>
+            <li>Microcopy that converts</li>
+            <li>Accessibility: reduced motion</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="site">
+      <div>© Bloom — 2025</div>
+      <div class="muted">Made with ❤️ — toggle <strong>Author View</strong> to edit sample content</div>
+    </footer>
+  </div>
+
+  <script>
+    // Simple client-side editing + local persistence + comments
+    const toggle = document.getElementById('toggleAuthor');
+    const toolbar = document.getElementById('authorToolbar');
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const postContent = document.getElementById('postContent');
+    const postTitle = document.getElementById('postTitle');
+    const articleCard = document.getElementById('articleCard');
+    const commentsList = document.getElementById('commentsList');
+    const commentForm = document.getElementById('commentForm');
+    const likesCount = document.getElementById('likesCount');
+    const postCommentsCount = document.getElementById('postCommentsCount');
+
+    // load saved data
+    const STORAGE_KEY = 'bloom_demo_v1';
+    let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || {
+      title: postTitle.textContent,
+      content: postContent.innerHTML,
+      likes: 0,
+      comments: []
+    };
+
+    function render(){
+      postTitle.textContent = state.title;
+      postContent.innerHTML = state.content;
+      likesCount.textContent = state.likes;
+      postCommentsCount.textContent = state.comments.length + (state.comments.length===1? ' comment' : ' comments');
+      commentsList.innerHTML = state.comments.map(c=>`<div class="comment"><div class="who">${escapeHtml(c.name)}</div><div class="muted tiny">${new Date(c.ts).toLocaleString()}</div><div style="margin-top:6px">${escapeHtml(c.body)}</div></div>`).join('') || '<div class="muted">No comments yet — be the first!</div>';
+      document.getElementById('sideAuthor').textContent = 'Mukesh Bhukya';
+    }
+
+    function save(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      toast('Saved to local storage');
+    }
+
+    function resetDemo(){
+      if(!confirm('Reset demo content?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    // tiny toast
+    function toast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg; t.style.position='fixed'; t.style.right='18px'; t.style.bottom='18px'; t.style.background='rgba(0,0,0,0.6)'; t.style.padding='10px 14px'; t.style.borderRadius='10px'; t.style.color='white'; t.style.zIndex=9999; document.body.appendChild(t);
+      setTimeout(()=>{t.style.opacity=0; t.style.transform='translateY(10px)';},1600); setTimeout(()=>t.remove(),2200);
+    }
+
+    // escape to avoid raw HTML injection in comments
+    function escapeHtml(str){ return String(str).replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s])); }
+
+    // comments
+    commentForm.addEventListener('submit', e=>{
+      e.preventDefault();
+      const name = document.getElementById('cname').value.trim();
+      const body = document.getElementById('cbody').value.trim();
+      if(!name||!body) return;
+      state.comments.unshift({name,body,ts:Date.now()});
+      document.getElementById('cname').value=''; document.getElementById('cbody').value='';
+      save(); render();
+    });
+
+    // like
+    document.getElementById('likeBtn').addEventListener('click',()=>{ state.likes++; save(); render(); });
+
+    // share (simple)
+    document.getElementById('shareBtn').addEventListener('click',()=>{ navigator.clipboard?.writeText(location.href).then(()=>toast('Page URL copied to clipboard')).catch(()=>toast('Unable to copy')) });
+
+    // author toggle
+    toggle.addEventListener('change', ()=>{
+      if(toggle.checked){ toolbar.style.display='flex'; articleCard.classList.add('editing'); enableEditing(); }
+      else { toolbar.style.display='none'; articleCard.classList.remove('editing'); disableEditing(); }
+    });
+
+    function enableEditing(){
+      postContent.contentEditable = true; postContent.classList.add('contenteditable');
+      postTitle.contentEditable = true; postTitle.classList.add('contenteditable');
+      editBtn.textContent = 'Stop editing (click Save)';
+    }
+    function disableEditing(){
+      postContent.contentEditable = false; postContent.classList.remove('contenteditable');
+      postTitle.contentEditable = false; postTitle.classList.remove('contenteditable');
+      editBtn.textContent = 'Edit content';
+    }
+
+    editBtn.addEventListener('click', ()=>{
+      if(postContent.isContentEditable){
+        // disable
+        postContent.contentEditable = false; postTitle.contentEditable=false; editBtn.textContent='Edit content';
+      } else {
+        postContent.contentEditable = true; postTitle.contentEditable=true; editBtn.textContent='Stop editing (click Save)';
+      }
+    });
+
+    saveBtn.addEventListener('click', ()=>{
+      // persist edits
+      state.title = postTitle.textContent.trim();
+      state.content = postContent.innerHTML;
+      save(); render();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', resetDemo);
+    document.getElementById('addImgBtn').addEventListener('click', ()=>{
+      const imgHtml = '<div style="margin:16px 0;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)"><img alt="sample" style="display:block;width:100%" src="data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'1200\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23ff7ab6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\' font-family=\'Arial\' fill=\'%23020b14\'>Sample Image</text></svg>'></div>';
+      postContent.insertAdjacentHTML('beforeend', imgHtml);
+    });
+
+    // init render
+    render();
+
+    // small UX: save autosave every 12s when editing
+    let autosaveTimer = setInterval(()=>{
+      if(document.hasFocus() && (postContent.isContentEditable || postTitle.isContentEditable)){
+        state.title = postTitle.textContent.trim(); state.content = postContent.innerHTML; localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        // no toast to avoid noise
+      }
+    }, 12000);
+
+  </script>
+</body>
+</html>
