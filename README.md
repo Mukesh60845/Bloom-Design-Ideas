@@ -30,4 +30,4 @@ It provides a delightful reading experience and supports multiple blog posts wit
 ## ⚙️ Setup
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/bloom-blog.git
+git clone https://github.com/Mukesh60845/bloom-blog.git
